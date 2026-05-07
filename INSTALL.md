@@ -1,6 +1,6 @@
 # Installation Guide
 
-This pipeline requires five conda environments plus an ASAFind Python venv. Most tools are licensed from DTU and must be downloaded separately after accepting their academic license.
+This pipeline requires multiple conda environments plus an ASAFind Python venv. Most tools are licensed from DTU and must be downloaded separately after accepting their academic license.
 
 ## Prerequisites
 
@@ -64,7 +64,30 @@ deeploc2 --fasta test.fasta --output test_out --model Fast --device cpu
 - Use `--device cuda` on GPU nodes, `--device mps` on Apple Silicon, `--device cpu` elsewhere
 - GPU jobs should be limited to one at a time (`--resources gpu=1`) to prevent OOM
 
+### Environment 2b: DeepLocPro 1.0 (prokaryotes only)
+
+DeepLocPro is tailored for prokaryotic subcellular localisation, predicting 6 locations: Cytoplasm, Cytoplasmic membrane, Periplasm, Outer membrane, Cell wall & surface, and Extracellular.
+
+Available from: https://github.com/Jaimomar99/deeplocpro
+
+```bash
+conda create -n deeplocpro python=3.10 -y
+conda activate deeplocpro
+git clone https://github.com/Jaimomar99/deeplocpro.git
+cd deeplocpro
+pip install .
+
+# Test
+deeplocpro --fasta test.fasta --output test_out
+```
+
+Alternatively, run via biolib: https://ku.biolib.com/deeplocpro
+
+**Note**: Only needed if you're processing prokaryotic samples. Eukaryotic samples use DeepLoc 2.1 (Environment 2).
+
 ### Environment 3: TargetP 2.0 & ASAFind 2.0
+
+> **Note**: Only needed for eukaryotic samples. Prokaryotes skip these steps.
 
 #### TargetP 2.0
 

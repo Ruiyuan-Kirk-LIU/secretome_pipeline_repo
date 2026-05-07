@@ -11,10 +11,11 @@ Raw proteome
   │
   ├─ Step 1: CD-HIT         → redundancy reduction (99% identity)
   ├─ Step 2: SignalP 6.0    → split into SP+ (signal peptide) / SP- (no SP)
-  ├─ Step 3: DeepLoc 2.1    → retain extracellular proteins
+  ├─ Step 3: DeepLoc 2.1    → retain extracellular proteins (eukaryotes)
+  │          DeepLocPro 1.0  → retain extracellular proteins (prokaryotes)
   ├─ Step 4: DeepTMHMM      → exclude transmembrane proteins
   │   │
-  │   └─ [prokaryotes stop here → secretome]
+  │   └─ [prokaryote stops here → secretome]
   │
   ├─ Step 5: TargetP 2.0    → exclude organelle-targeted proteins (eukaryotes only)
   ├─ Step 6: ASAFind 2.0    → exclude complex-plastid targeted (plant_complex only)
@@ -49,7 +50,10 @@ cd secretome_pipeline_repo
 # 1. Install environments (see INSTALL.md for details)
 # 2. Place proteomes in data/raw/
 # 3. Edit config/config_hpc.yaml or config/config_mac.yaml
-# 4. Run
+# 4. Dry run — verify the DAG before execution
+snakemake --cores 1 -np --configfile config.yaml \
+    --resources gpu=1 asafind_lock=1
+# 5. Run
 conda activate secretome_pipeline
 snakemake --cores 8 --configfile config/config_hpc.yaml \
     --resources gpu=1 asafind_lock=1
@@ -71,7 +75,7 @@ Add samples to the `samples:` section:
 
 ```yaml
 samples:
-  Cgor:
+  Cladocopium:
     proteome: "data/raw/Cladocopium.faa"
     organism_type: "plant_complex"
     signalp_organism: "other"
@@ -116,7 +120,7 @@ qsub run_pipeline.pbs
 ### Resource notes
 
 - `gpu=1` limits DeepLoc to one job at a time (prevents GPU OOM)
-- `asafind_lock=1` serializes ASAFind runs (shares temp/output directories)
+- `asafind_lock=1` serialises ASAFind runs (shares temp/output directories)
 - Request `mem=64gb` or more for full proteomes; `mem=32gb` may OOM with multiple DeepLoc jobs
 
 ## Running Locally (Mac/Linux)
@@ -204,21 +208,18 @@ Add entries to `config.yaml` and rerun. Snakemake only processes new/changed sam
 samples:
   NewSpecies:
     proteome: "data/raw/NewSpecies.faa"
-    organism_type: "plant_simple"
+    organism_type: "plant_complex"
     signalp_organism: "other"
 ```
 
 ## Citation
 
-If you use this pipeline, please cite this repository:  
-
-**Liu, Y. (2026) Secretome Prediction Pipeline. GitHub. https://github.com/Ruiyuan-Kirk-LIU/secretome_pipeline_repo**
-  
-Also, please cite the tools used:
+If you use this pipeline, please cite the tools used:
 
 - **CD-HIT**: Fu et al. (2012) Bioinformatics 28:3150-3152
 - **SignalP 6.0**: Teufel et al. (2022) Nature Biotechnology 40:1023-1025
-- **DeepLoc 2.1**: Thumuluri et al. (2022) Nucleic Acids Research 50:W228-W234
+- **DeepLoc 2.1**: Ødum et al. (2024) Nucleic Acids Research 52:W215-W220
+- **DeepLocPro 1.0**: Moreno et al. (2024) Bioinformatics 40:btae677
 - **DeepTMHMM**: Hallgren et al. (2022) bioRxiv doi:10.1101/2022.04.08.487609
 - **TargetP 2.0**: Armenteros et al. (2019) Life Science Alliance 2:e201900429
 - **ASAFind 2.0**: Gruber et al. (2025) The Plant Journal 122:e70138

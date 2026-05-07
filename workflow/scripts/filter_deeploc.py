@@ -1,5 +1,6 @@
 """
-Retain only proteins predicted as extracellular by DeepLoc 2.0.
+Retain only proteins predicted as extracellular.
+Supports both DeepLoc 2.1 (eukaryotes) and DeepLocPro 1.0 (prokaryotes).
 """
 import sys
 import pandas as pd
@@ -8,10 +9,40 @@ from Bio import SeqIO
 sys.stderr = open(snakemake.log[0], "w")
 
 deeploc = pd.read_csv(snakemake.input.deeploc)
+
+# Find the protein ID column (try common names)
+id_col = None
+for candidate in ["Protein_ID", "protein_id", "ID", "id", "Protein ID"]:
+    if candidate in deeploc.columns:
+        id_col = candidate
+        break
+if id_col is None:
+    id_col = deeploc.columns[0]
+    print(f"WARNING: No standard ID column found, using first column: {id_col}", file=sys.stderr)
+
+# Find the localisation column (try common names from DeepLoc 2.1 and DeepLocPro 1.0)
+loc_col = None
+for candidate in ["Localizations", "Localization", "Location", "Prediction",
+                   "localizations", "localization", "location", "prediction"]:
+    if candidate in deeploc.columns:
+        loc_col = candidate
+        break
+if loc_col is None:
+    # Check for any column containing "local" or "predict" in its name
+    for col in deeploc.columns:
+        if "local" in col.lower() or "predict" in col.lower():
+            loc_col = col
+            break
+if loc_col is None:
+    raise ValueError(f"Cannot find localisation column in: {list(deeploc.columns)}")
+
+print(f"Using ID column: {id_col}, Location column: {loc_col}", file=sys.stderr)
+
+# Extract extracellular protein IDs
 extra_ids = set(
     deeploc.loc[
-        deeploc["Localizations"].astype(str).str.contains("Extracellular", case=False, na=False),
-        "Protein_ID",
+        deeploc[loc_col].astype(str).str.contains("Extracellular", case=False, na=False),
+        id_col,
     ].astype(str)
 )
 

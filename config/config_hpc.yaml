@@ -18,6 +18,12 @@ tools:
     model: "Fast"           # "Fast" or "Accurate"
     device: "cuda"          # "cpu" or "cuda"
 
+  # DeepLocPro 1.0 (prokaryotes only)
+  deeplocpro:
+    conda_env: "deeplocpro"
+    cmd: "deeplocpro"
+    extra_flags: ""         # e.g. "--organism gram_negative"
+
   targetp:
     conda_env: "targetp2_env"
     cmd: "/path/to/targetp-2.0/bin/targetp"
@@ -45,7 +51,7 @@ tools:
 # ------------------------------------------------------------------------------
 samples:
   # Example entries:
-  # Cgor:
+  # Cladocopium:
   #   proteome: "data/raw/Cladocopium.faa"
   #   organism_type: "plant_complex"   # prokaryote | animal | plant_simple | plant_complex
   #   signalp_organism: "other"        # eukarya | other | gram-negative | gram-positive

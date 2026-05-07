@@ -30,3 +30,5 @@ Thumbs.db
 # PBS job outputs
 *.o[0-9]*
 *.e[0-9]*
+.ipynb_checkpoints/
+*.tar.gz

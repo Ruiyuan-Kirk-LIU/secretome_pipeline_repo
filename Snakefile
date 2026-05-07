@@ -5,6 +5,7 @@
 #   Step 1: CD-HIT         (redundancy reduction)       [secretome_pipeline env]
 #   Step 2: SignalP 6.0    (split → SP+ / SP-)          [signalp6_env]
 #   Step 3: DeepLoc 2.1    (retain extracellular)       [deeploc2 env]
+#           DeepLocPro 1.0 (retain extracellular)       [deeplocpro env]
 #   Step 4: DeepTMHMM      (exclude transmembrane)      [apptainer / local / biolib]
 #   Step 5: TargetP 2.0    (exclude organelle-targeted) [targetp2_env]       (eukaryotes only)
 #   Step 6: ASAFind 2.0    (exclude complex-plastid)    [targetp2_env + venv] (plant_complex only)
@@ -181,18 +182,37 @@ rule split_by_sp:
 
 
 # ===========================================================================
-# Step 3a — DeepLoc 2.1  [deeploc2 env]
+# Step 3a — Subcellular localisation prediction
+#   Eukaryotes:  DeepLoc 2.1   [deeploc2 env]
+#   Prokaryotes: DeepLocPro 1.0 [deeplocpro env]
 # ===========================================================================
+def get_deeploc_params(wildcards):
+    """Return (conda_env, cmd, extra_flags) based on organism type."""
+    if is_prokaryote(wildcards.sample):
+        cfg = config["tools"]["deeplocpro"]
+        return {
+            "conda_env": cfg["conda_env"],
+            "cmd": cfg["cmd"],
+            "extra_flags": cfg.get("extra_flags", ""),
+        }
+    else:
+        cfg = config["tools"]["deeploc"]
+        return {
+            "conda_env": cfg["conda_env"],
+            "cmd": cfg["cmd"],
+            "extra_flags": f"--model {cfg['model']} --device {cfg['device']}",
+        }
+
+
 rule deeploc:
     input:
         faa="results/{sample}/02_sp_split/{sample}_{track}.faa",
     output:
         csv="results/{sample}/03_deeploc/{sample}_{track}_deeploc.csv",
     params:
-        conda_env=config["tools"]["deeploc"]["conda_env"],
-        cmd=config["tools"]["deeploc"]["cmd"],
-        model=config["tools"]["deeploc"]["model"],
-        device=config["tools"]["deeploc"]["device"],
+        conda_env=lambda wc: get_deeploc_params(wc)["conda_env"],
+        cmd=lambda wc: get_deeploc_params(wc)["cmd"],
+        extra_flags=lambda wc: get_deeploc_params(wc)["extra_flags"],
         outdir="results/{sample}/03_deeploc/{sample}_{track}_deeploc_out",
     log:
         "logs/{sample}/03_deeploc_{track}.log",
@@ -205,8 +225,7 @@ rule deeploc:
         mkdir -p {params.outdir}
         {params.cmd} --fasta {input.faa} \
             --output {params.outdir} \
-            --model {params.model} \
-            --device {params.device} \
+            {params.extra_flags} \
             > {log} 2>&1
         cp {params.outdir}/*.csv {output.csv}
         """

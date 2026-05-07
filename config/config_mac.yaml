@@ -18,6 +18,12 @@ tools:
     model: "Fast"
     device: "mps"           # "mps" for Apple Silicon, "cpu" for Linux
 
+  # DeepLocPro 1.0 (prokaryotes only)
+  deeplocpro:
+    conda_env: "deeplocpro"
+    cmd: "deeplocpro"
+    extra_flags: ""
+
   targetp:
     conda_env: "targetp2_env"
     cmd: "/path/to/targetp-2.0/bin/targetp"
