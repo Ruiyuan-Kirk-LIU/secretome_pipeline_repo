@@ -40,6 +40,12 @@ Optional post-pipeline (eukaryotes only):
 ## Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/Ruiyuan-Kirk-LIU/secretome_pipeline_repo.git
+cd secretome_pipeline_repo
+```
+
+```bash
 # 1. Install environments (see INSTALL.md for details)
 # 2. Place proteomes in data/raw/
 # 3. Edit config/config_hpc.yaml or config/config_mac.yaml
