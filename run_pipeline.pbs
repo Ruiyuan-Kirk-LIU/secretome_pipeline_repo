@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -N secretome_pipeline
+#PBS -j oe
+#PBS -l select=1:ncpus=16:mpiprocs=12:ompthreads=1:ngpus=1
+#PBS -l walltime=100:00:00
+set -eo pipefail
+cd "${PBS_O_WORKDIR:?}"
+
+# Load conda — adjust module name for your HPC
+module load conda/20260225
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate secretome_pipeline
+
+snakemake --cores 8 --configfile config.yaml \
+    --resources gpu=1 asafind_lock=1

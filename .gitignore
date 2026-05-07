@@ -1,0 +1,32 @@
+# Pipeline outputs
+results/
+logs/
+.snakemake/
+
+# Data files (too large for git)
+data/raw/*.faa
+data/raw/*.fasta
+
+# Config with local paths (use templates in config/)
+config.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.eggs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# PBS job outputs
+*.o[0-9]*
+*.e[0-9]*
