@@ -41,7 +41,7 @@ tools:
 # ------------------------------------------------------------------------------
 samples:
   # Example:
-  # Stri:
+  # Cladocopium:
   #   proteome: "data/raw/Cladocopium.faa"
   #   organism_type: "plant_complex"   # prokaryote | animal | plant_simple | plant_complex
   #   signalp_organism: "other"        # eukarya | other | gram-negative | gram-positive
