@@ -204,7 +204,11 @@ samples:
 
 ## Citation
 
-If you use this pipeline, please cite the tools used:
+If you use this pipeline, please cite this repository:  
+
+**Liu, Y. (2026) Secretome Prediction Pipeline. GitHub. https://github.com/Ruiyuan-Kirk-LIU/secretome_pipeline_repo**
+  
+Also, please cite the tools used:
 
 - **CD-HIT**: Fu et al. (2012) Bioinformatics 28:3150-3152
 - **SignalP 6.0**: Teufel et al. (2022) Nature Biotechnology 40:1023-1025
