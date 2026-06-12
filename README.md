@@ -33,7 +33,7 @@ Optional post-pipeline (eukaryotes only):
 
 | Strategy | TargetP | ASAFind | ER filter | SignalP `-org` | Example organisms |
 |---|---|---|---|---|---|
-| `prokaryote` | skipped | skipped | skipped | `gram-negative` or `gram-positive` | Cyanobacteria, *E. coli* |
+| `prokaryote` | skipped | skipped | skipped | `other` | Cyanobacteria, *E. coli* |
 | `animal` | mTP only | skipped | yes | `eukarya` | Metazoans |
 | `plant_simple` | mTP, cTP | skipped | yes | `eukarya` | Land plants, green algae |
 | `plant_complex` | mTP, cTP, luTP | yes | yes | `other` | Dinoflagellates, diatoms, cryptophytes |
@@ -82,7 +82,7 @@ samples:
   Synechocystis:
     proteome: "data/raw/Synechocystis.faa"
     organism_type: "prokaryote"
-    signalp_organism: "gram-negative"
+    signalp_organism: "other"
 ```
 
 ### DeepTMHMM Methods
