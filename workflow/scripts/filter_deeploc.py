@@ -12,7 +12,7 @@ deeploc = pd.read_csv(snakemake.input.deeploc)
 
 # Find the protein ID column (try common names)
 id_col = None
-for candidate in ["Protein_ID", "protein_id", "ID", "id", "Protein ID"]:
+for candidate in ["Protein_ID", "protein_id", "ACC", "acc", "ID", "id", "Protein ID"]:
     if candidate in deeploc.columns:
         id_col = candidate
         break
