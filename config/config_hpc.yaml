@@ -54,11 +54,11 @@ samples:
   # Cladocopium:
   #   proteome: "data/raw/Cladocopium.faa"
   #   organism_type: "plant_complex"   # prokaryote | animal | plant_simple | plant_complex
-  #   signalp_organism: "other"        # eukarya | other | gram-negative | gram-positive
+  #   signalp_organism: "other"        # eukarya | other
   # Synechocystis:
   #   proteome: "data/raw/Synechocystis.faa"
   #   organism_type: "prokaryote"
-  #   signalp_organism: "gram-negative"
+  #   signalp_organism: "other"
 
 # CD-HIT settings
 cdhit:
