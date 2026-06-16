@@ -217,7 +217,7 @@ samples:
 If you use this pipeline, please cite this repository:
 
 - **Liu, Y. Secretome Prediction Pipeline (Version 0.1.1) [Computer software]**
-- **Liu, Y. (2026). Secretome Prediction Pipeline (v0.1.1). Zenodo. [https://doi.org/10.5281/zenodo.20712459](https://doi.org/10.5281/zenodo.20712459)**
+- **Liu, Y. (2026). Secretome Prediction Pipeline (v0.1.1). Zenodo. [https://doi.org/10.5281/zenodo.20712458](https://doi.org/10.5281/zenodo.20712458)**
 
 Also, please cite the tools used:
 
