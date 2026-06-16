@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "Secretome Prediction Pipeline"
-version: "0.1.0"
+version: "0.1.1"
 type: software
 license: "MIT"
 message: "If you use this pipeline, please cite it as below."
