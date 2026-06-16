@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: "Secretome Prediction Pipeline"
+version: "0.1.0"
+type: software
+license: "MIT"
+message: "If you use this pipeline, please cite it as below."
+authors:
+  - family-names: "Liu"
+    given-names: "Yuxin"
+    affiliation: "The University of Tokyo"
+    orcid: "https://orcid.org/0000-0001-7252-5381"
+abstract: "A Snakemake pipeline for predicting high-confidence secreted proteins from eukaryotic and prokaryotic proteomes. Supports four organism strategies and produces two secretome classes per sample: Secretome (SP+) and Secretome (SP-)."
+keywords:
+  - secretome
+  - protein prediction
+  - CD-HIT
+  - SignalP
+  - DeepLoc
+  - DeepLocPro
+  - DeepTMHMM
+  - TargetP
+  - ASAFind
+  - NetGPI
