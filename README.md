@@ -36,7 +36,12 @@ Optional post-pipeline (eukaryotes only):
 | `prokaryote` | skipped | skipped | skipped | `other` | Cyanobacteria, *E. coli* |
 | `animal` | mTP only | skipped | yes | `eukarya` | Metazoans |
 | `plant_simple` | mTP, cTP | skipped | yes | `eukarya` | Land plants, green algae |
-| `plant_complex` | mTP, cTP, luTP | yes | yes | `other` | Dinoflagellates, diatoms, cryptophytes |
+| `plant_complex` | mTP, cTP, luTP | yes | yes | `eukarya` / `other` | Dinoflagellates, diatoms, cryptophytes |
+
+For `plant_complex`, part of the SP predictions varied by `eukarya` and `other` modes. This will cause shifts of ~0.5\% SP + predictions to SP -.
+
+If you are focusing on SP + secretomes of these organisms, we strongly recommend identifying these proteins whose SP status changed by modes before proceeding with further analysis. 
+
 
 ## Quick Start
 
